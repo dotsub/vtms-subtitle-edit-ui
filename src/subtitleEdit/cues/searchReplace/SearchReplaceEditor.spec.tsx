@@ -8,7 +8,7 @@ import { AnyAction } from "@reduxjs/toolkit";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { CueDto, Track } from "../../model";
 import { updateCues, updateMatchedCues } from "../cuesList/cuesListActions";
-import { setSaveTrack } from "../saveSlices";
+import { SaveState, setSaveTrack } from "../saveSlices";
 import { updateEditingTrack } from "../../trackSlices";
 import ToggleButton from "../../toolbox/ToggleButton";
 import { updateEditingCueIndex } from "../edit/cueEditorSlices";
@@ -922,7 +922,8 @@ describe("SearchReplaceEditor", () => {
         expect(testingStore.getState().cues[1].vttCue.text).toEqual("Caption New Line 5");
         expect(testingStore.getState().cues[2].vttCue.text).toEqual("Caption Line 3");
         expect(testingStore.getState().cues[3].vttCue.text).toEqual("Caption New Line 5");
-        expect(saveTrack).toHaveBeenCalledTimes(1);
+        expect(testingStore.getState().saveAction.saveState).toEqual(SaveState.REQUEST_SENT);
+        expect(testingStore.getState().saveAction.multiCuesEdit).toBeTruthy();
     });
 
     it("Update matched cues in Redux when Replace All button is clicked", async () => {

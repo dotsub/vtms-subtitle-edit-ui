@@ -17,20 +17,15 @@ import {
     createTestingSourceCues,
     createTestingTargetCues
 } from "../cuesList/cuesListTestUtils";
-import { saveCueUpdateSlice } from "../saveCueUpdateSlices";
 
 let testingStore = createTestingStore();
 const testTrack = { mediaTitle: "testingTrack", language: { id: "en-US", name: "English", direction: "LTR" }};
 
-const updateCueMock = jest.fn();
-
 // TODO: I am missing here test cases with child components
 describe("ClickCueWrapper", () => {
     beforeEach(()=> {
-        testingStore = createTestingStore();
-        testingStore.dispatch(updateEditingTrack(testTrack as Track) as {} as AnyAction);
-        testingStore.dispatch(saveCueUpdateSlice.actions.setUpdateCueCallback(updateCueMock));
-        jest.clearAllMocks();
+       testingStore = createTestingStore();
+       testingStore.dispatch(updateEditingTrack(testTrack as Track) as {} as AnyAction);
     });
 
     describe("caption mode", () => {

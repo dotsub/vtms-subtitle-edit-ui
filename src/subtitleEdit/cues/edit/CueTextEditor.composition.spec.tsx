@@ -17,7 +17,6 @@ import { fetchSpellCheck } from "../spellCheck/spellCheckFetch";
 import { Replacement, SpellCheck } from "../spellCheck/model";
 import { act } from "react-dom/test-utils";
 import { setSpellCheckDomain } from "../../spellcheckerSettingsSlice";
-import { saveCueUpdateSlice } from "../saveCueUpdateSlices";
 
 jest.mock("lodash", () => ({
     debounce: (fn: MockedDebouncedFunction): Function => {
@@ -36,8 +35,8 @@ fetchSpellCheck.mockImplementation(() => jest.fn());
 let testingStore = createTestingStore();
 
 const cues = [
-    { id: "cue-1", vttCue: new VTTCue(0, 2, "Caption Line 1"), cueCategory: "DIALOGUE" } as CueDto,
-    { id: "cue-2", vttCue: new VTTCue(3, 7, "Caption Line 2"), cueCategory: "DIALOGUE" } as CueDto
+    { vttCue: new VTTCue(0, 2, "Caption Line 1"), cueCategory: "DIALOGUE" } as CueDto,
+    { vttCue: new VTTCue(3, 7, "Caption Line 2"), cueCategory: "DIALOGUE" } as CueDto
 ];
 
 interface ReduxTestWrapperProps {
@@ -65,16 +64,14 @@ const ReduxTestWrapper = (props: ReduxTestWrapperProps): ReactElement => (
 
 const testTrack = { mediaTitle: "testingTrack", language: { id: "en-US", name: "English", direction: "LTR" }};
 
-const updateCueMock = jest.fn();
-
 describe("CueTextEditor", () => {
     beforeEach(() => {
         document.getElementsByTagName("html")[0].innerHTML = "";
         testingStore = createTestingStore();
         testingStore.dispatch(updateCues(cues) as {} as AnyAction);
         testingStore.dispatch(updateEditingTrack(testTrack as Track) as {} as AnyAction);
-        testingStore.dispatch(saveCueUpdateSlice.actions.setUpdateCueCallback(updateCueMock));
-        jest.resetAllMocks();
+        // @ts-ignore we are mocking this function
+        fetchSpellCheck.mockReset();
     });
 
     it("doesn't re-render decorators during composition mode for diacritics", async () => {

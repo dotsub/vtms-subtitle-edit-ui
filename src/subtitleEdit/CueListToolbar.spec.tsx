@@ -132,7 +132,6 @@ describe("CueListToolbar", () => {
                     editingTrack={testingTrack}
                     onComplete={jest.fn()}
                     onViewTrackHistory={jest.fn()}
-                    saveState="NONE"
                 />
             </Provider>
         );
@@ -244,7 +243,6 @@ describe("CueListToolbar", () => {
                     onComplete={jest.fn()}
                     onViewTrackHistory={jest.fn()}
                     editDisabled
-                    saveState="NONE"
                 />
             </Provider>
         );

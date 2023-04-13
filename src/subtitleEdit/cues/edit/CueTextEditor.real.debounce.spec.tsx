@@ -12,20 +12,19 @@ import { updateCues, updateMatchedCues } from "../cuesList/cuesListActions";
 import CueTextEditor, { CueTextEditorProps } from "./CueTextEditor";
 import { setSaveTrack } from "../saveSlices";
 import { updateEditingTrack } from "../../trackSlices";
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { replaceCurrentMatch, searchReplaceSlice } from "../searchReplace/searchReplaceSlices";
 import { act } from "react-dom/test-utils";
 import { setSpellCheckDomain } from "../../spellcheckerSettingsSlice";
 import { updateEditingCueIndex } from "./cueEditorSlices";
 import { matchedCuesSlice } from "../cuesList/cuesListSlices";
 import { Replacement, SpellCheck } from "../spellCheck/model";
-import { saveCueUpdateSlice } from "../saveCueUpdateSlices";
 
 let testingStore = createTestingStore();
 
 const cues = [
-    { id: "cue-1", vttCue: new VTTCue(0, 2, "Caption Line 1"), cueCategory: "DIALOGUE", editUuid: "1" } as CueDto,
-    { id: "cue-2", vttCue: new VTTCue(3, 7, "Caption Line 2"), cueCategory: "DIALOGUE", editUuid: "2" } as CueDto
+    { vttCue: new VTTCue(0, 2, "Caption Line 1"), cueCategory: "DIALOGUE", editUuid: "1" } as CueDto,
+    { vttCue: new VTTCue(3, 7, "Caption Line 2"), cueCategory: "DIALOGUE", editUuid: "2" } as CueDto
 ];
 const bindCueViewModeKeyboardShortcutSpy = jest.fn() as () => void;
 const unbindCueViewModeKeyboardShortcutSpy = jest.fn() as () => void;
@@ -76,8 +75,6 @@ const ReduxTestWrapper = (props: ReduxTestWrapperProps): ReactElement => (
     </Provider>
 );
 
-const updateCueMock = jest.fn();
-
 describe("CueTextEditor", () => {
     beforeEach(() => {
         testingStore = createTestingStore();
@@ -85,11 +82,10 @@ describe("CueTextEditor", () => {
         testingStore.dispatch(updateEditingCueIndex(-1) as {} as AnyAction);
         testingStore.dispatch(updateEditingTrack(testTrack as Track) as {} as AnyAction);
         testingStore.dispatch(updateCues(cues) as {} as AnyAction);
-        testingStore.dispatch(saveCueUpdateSlice.actions.setUpdateCueCallback(updateCueMock));
         jest.resetAllMocks();
     });
 
-    it("updates cue in redux store with debounce", async () => {
+    it("updates cue in redux store with debounce", (done) => {
         // GIVEN
         const editor = createEditorNode();
 
@@ -102,11 +98,12 @@ describe("CueTextEditor", () => {
         });
 
         // THEN
-        await waitFor(
+        setTimeout(
             () => {
                 expect(testingStore.getState().cues[0].vttCue.text).toEqual("someText Paste text to end");
+                done();
             },
-            { timeout: 250 }
+            250
         );
     });
 
@@ -222,7 +219,7 @@ describe("CueTextEditor", () => {
             expect(testingStore.getState().matchedCues.matchedCues).toHaveLength(2);
     });
 
-    it("updates cue in redux for single match/replace when unmounted for next match - single", async () => {
+    it("updates cue in redux for single match/replace when unmounted for next match - single", (done) => {
         // GIVEN
         testingStore.dispatch(updateEditingCueIndex(0) as {} as AnyAction);
         const saveTrack = jest.fn();
@@ -262,17 +259,17 @@ describe("CueTextEditor", () => {
         actualNode.unmount();
 
         // THEN
-        await waitFor(
+        setTimeout(
             () => {
-                expect(updateCueMock).toHaveBeenCalledTimes(1);
-                expect(saveTrack).not.toBeCalled();
+                expect(saveTrack).toHaveBeenCalledTimes(1);
                 expect(testingStore.getState().cues[0].vttCue.text)
                     .toEqual("some <i>HTML</i> <b>abcd efg</b> sample");
                 expect(testingStore.getState().matchedCues.matchedCues[0].targetCues[0].cue.vttCue.text)
                     .toEqual("some <i>HTML</i> <b>abcd efg</b> sample");
                 expect(testingStore.getState().matchedCues.matchedCues).toHaveLength(2);
+                done();
             },
-            { timeout: 3000 }
+            3000
         );
     });
 
@@ -301,7 +298,7 @@ describe("CueTextEditor", () => {
         expect(testingStore.getState().cues[0].vttCue.text).toEqual("Caption Line 1");
     });
 
-    it("triggers autosave only once immediately after text change", async () => {
+    it("triggers autosave only once immediately after text change", (done) => {
         // GIVEN
         const saveTrack = jest.fn();
         testingStore.dispatch(setSaveTrack(saveTrack) as {} as AnyAction);
@@ -316,16 +313,16 @@ describe("CueTextEditor", () => {
         });
 
         // THEN
-        await waitFor(
+        setTimeout(
             () => {
-                expect(updateCueMock).toBeCalledTimes(1);
-                expect(saveTrack).not.toBeCalled();
+                expect(saveTrack).toBeCalledTimes(1);
+                done();
             },
-            { timeout: 6000 }
+            6000
         );
     });
 
-    it("triggers spellcheck only once immediately after text change", async () => {
+    it("triggers spellcheck only once immediately after text change", (done) => {
         // GIVEN
         const testingResponse = {
             matches: [
@@ -378,7 +375,7 @@ describe("CueTextEditor", () => {
         });
 
         // THEN
-        await waitFor(
+        setTimeout(
             () => {
                 // @ts-ignore modern browsers does have it
                 expect(global.fetch).toBeCalledWith(
@@ -391,12 +388,13 @@ describe("CueTextEditor", () => {
                 );
                 // @ts-ignore modern browsers does have it
                 expect(global.fetch).toBeCalledTimes(2);
+                done();
             },
-            { timeout: 6000 }
+            6000
         );
     });
 
-    it("triggers spellcheck only once immediately after clear text change", async () => {
+    it("triggers spellcheck only once immediately after clear text change", (done) => {
         // GIVEN
         const testingResponse = {
             matches: [
@@ -458,7 +456,7 @@ describe("CueTextEditor", () => {
         fireEvent.keyDown(editor, { keyCode: 8 });
 
         // THEN
-        await waitFor(
+        setTimeout(
             () => {
                 // @ts-ignore modern browsers does have it
                 expect(global.fetch).toBeCalledWith(
@@ -471,13 +469,13 @@ describe("CueTextEditor", () => {
                 );
                 // @ts-ignore modern browsers does have it
                 expect(global.fetch).toBeCalledTimes(2);
-                expect(updateCueMock).toHaveBeenCalled();
+                done();
             },
-            { timeout: 6000 }
+            6000
         );
     });
 
-    it("doesn't trigger autosave when cue editor is rendered", async() => {
+    it("doesn't trigger autosave when cue editor is rendered", (done) => {
         // GIVEN
         const saveTrack = jest.fn();
         testingStore.dispatch(setSaveTrack(saveTrack) as {} as AnyAction);
@@ -486,16 +484,16 @@ describe("CueTextEditor", () => {
         createEditorNode();
 
         // THEN
-        await waitFor(
+        setTimeout(
             () => {
-                expect(updateCueMock).not.toBeCalled();
                 expect(saveTrack).not.toBeCalled();
+                done();
             },
-            { timeout: 6000 }
+            6000
         );
     });
 
-    it("updates matched cues during ignores all action", async () => {
+    it("updates matched cues during ignores all action", (done) => {
         // GIVEN
         const trackId = "0fd7af04-6c87-4793-8d66-fdb19b5fd04d";
         const saveTrack = jest.fn();
@@ -520,13 +518,13 @@ describe("CueTextEditor", () => {
         } as SpellCheck;
 
         const cues = [
-            { id: "cue-1", vttCue: new VTTCue(0, 2, "Caption Linex 1"),
+            { vttCue: new VTTCue(0, 2, "Caption Linex 1"),
                 cueCategory: "DIALOGUE", spellCheck: spellCheck,
                 errors: [CueError.SPELLCHECK_ERROR]},
-            { id: "cue-2", vttCue: new VTTCue(2, 4, "Caption Linex 2"),
+            { vttCue: new VTTCue(2, 4, "Caption Linex 2"),
                 cueCategory: "DIALOGUE", spellCheck: spellCheck,
                 errors: [CueError.SPELLCHECK_ERROR]},
-            { id: "cue-3", vttCue: new VTTCue(4, 6, "Caption Linex 2"),
+            { vttCue: new VTTCue(4, 6, "Caption Linex 2"),
                 cueCategory: "DIALOGUE", errors: [CueError.SPELLCHECK_ERROR]}
         ] as CueDto[];
         testingStore.dispatch(updateCues(cues) as {} as AnyAction);
@@ -571,12 +569,12 @@ describe("CueTextEditor", () => {
         expect(testingStore.getState().matchedCues.matchedCues[1].targetCues[0].cue.errors).toEqual([]);
         expect(testingStore.getState().matchedCues.matchedCues[2].targetCues[0].cue.errors).toEqual([]);
 
-        await waitFor(
+        setTimeout(
             () => {
-                expect(updateCueMock).toBeCalled();
-                expect(saveTrack).not.toBeCalled();
+                expect(saveTrack).toBeCalled();
+                done();
             },
-            { timeout: 6000 }
+            6000
         );
     });
 });

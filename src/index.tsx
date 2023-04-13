@@ -4,15 +4,16 @@ import "primeicons/primeicons.css";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
 import { Provider, useDispatch } from "react-redux";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect } from "react";
 import { updateCues } from "./subtitleEdit/cues/cuesList/cuesListActions";
 import { updateEditingTrack } from "./subtitleEdit/trackSlices";
 import { updateSubtitleUser } from "./subtitleEdit/userSlices";
-import { CueDto, Language, SaveState, Track, User } from "./subtitleEdit/model";
+import { CueDto, Language, Track, User } from "./subtitleEdit/model";
 import ReactDOM from "react-dom";
 import SubtitleEdit from "./subtitleEdit/SubtitleEdit";
 import { readSubtitleSpecification } from "./subtitleEdit/toolbox/subtitleSpecifications/subtitleSpecificationSlice";
 import testingStore from "./testUtils/testingStore";
+import { setAutoSaveSuccess } from "./subtitleEdit/cues/saveSlices";
 import "draft-js/dist/Draft.css";
 import { updateSourceCues } from "./subtitleEdit/cues/view/sourceCueSlices";
 
@@ -51,7 +52,6 @@ const inChunkRange = (start: number, end: number): boolean => {
 
 const TestApp = (): ReactElement => {
     const dispatch = useDispatch();
-    const [ saveState, setSaveState ] = useState<SaveState>("NONE");
 
     // ################################## Source Cues ###########################################
     useEffect(() => {
@@ -61,75 +61,63 @@ const TestApp = (): ReactElement => {
 
             if (TIME_MATCH_TESTING) {
                 sourceCues.push({
-                    id: "cue-src-1000001",
                     vttCue: new VTTCue(0, 1, "text"),
                     cueCategory: "DIALOGUE",
                     editDisabled: !inChunkRange(0, 1)
                 });
                 sourceCues.push({
-                    id: "cue-src-1000002",
                     vttCue: new VTTCue(1, 2, "text"),
                     cueCategory: "DIALOGUE",
                     editDisabled: !inChunkRange(1, 2)
                 });
                 sourceCues.push({
-                    id: "cue-src-1000003",
                     vttCue: new VTTCue(2, 3, "text"),
                     cueCategory: "DIALOGUE",
                     editDisabled: !inChunkRange(2, 3)
                 });
                 sourceCues.push({
-                    id: "cue-src-1000004",
                     vttCue: new VTTCue(3, 6, "text"),
                     cueCategory: "DIALOGUE",
                     editDisabled: !inChunkRange(3, 6)
                 });
 
                 sourceCues.push({
-                    id: "cue-src-1000005",
                     vttCue: new VTTCue(7.673, 10.208, "text"),
                     cueCategory: "DIALOGUE",
                     editDisabled: !inChunkRange(7.673, 10.208)
                 });
                 sourceCues.push({
-                    id: "cue-src-1000006",
                     vttCue: new VTTCue(10.746, 11.782, "text"),
                     cueCategory: "DIALOGUE",
                     editDisabled: !inChunkRange(10.746, 11.782)
                 });
                 sourceCues.push({
-                    id: "cue-src-1000007",
                     vttCue: new VTTCue(12.504, 14.768, "text"),
                     cueCategory: "DIALOGUE",
                     editDisabled: !inChunkRange(12.504, 14.768)
                 });
                 sourceCues.push({
-                    id: "cue-src-1000008",
                     vttCue: new VTTCue(15.169, 17.110, "text"),
                     cueCategory: "DIALOGUE",
                     editDisabled: !inChunkRange(15.169, 17.110)
                 });
 
                 sourceCues.push({
-                    id: "cue-src-1000009",
                     vttCue: new VTTCue(18.954, 20.838, "text"),
                     cueCategory: "DIALOGUE",
                     editDisabled: !inChunkRange(18.954, 20.838)
                 });
                 sourceCues.push({
-                    id: "cue-src-1000001",
                     vttCue: new VTTCue(21.674, 23.656, "text"),
                     cueCategory: "DIALOGUE",
                     editDisabled: !inChunkRange(21.674, 23.656)
                 });
                 sourceCues.push({
-                    id: "cue-src-1000010",
                     vttCue: new VTTCue(24.024, 24.504, "text"),
                     cueCategory: "DIALOGUE",
                     editDisabled: !inChunkRange(24.024, 24.504)
                 });
                 sourceCues.push({
-                    id: "cue-src-1000011",
                     vttCue: new VTTCue(25.383, 28.115, "text"),
                     cueCategory: "DIALOGUE",
                     editDisabled: !inChunkRange(25.383, 28.115)
@@ -142,7 +130,6 @@ const TestApp = (): ReactElement => {
                 const randomEnd = endTime = TIME_MATCH_TESTING ? randomStart + randomTime(3) : (idx + 1) * 3;
                 const withinChunkRange = inChunkRange(randomStart, randomEnd);
                 sourceCues.push({
-                   id: `cue-src-${idx}`,
                    vttCue: new VTTCue(randomStart, randomEnd, `<i>Source <b>Line</b></i> ${idx + 1}\nWrapped text.`),
                     cueCategory: "DIALOGUE",
                     editDisabled: !withinChunkRange,
@@ -160,82 +147,70 @@ const TestApp = (): ReactElement => {
                 500
             );
         }
-    }, [dispatch]);
+    });
 
     // ################################## Target Cues ###########################################
     useEffect(() => {
         const targetCues = [] as CueDto[];
         if (TIME_MATCH_TESTING) {
             targetCues.push({
-                id: "cue-trg-1000001",
                 vttCue: new VTTCue(0, 3, "text"),
                 cueCategory: "DIALOGUE",
                 editDisabled: !inChunkRange(0, 3)
             });
             targetCues.push({
-                id: "cue-trg-1000002",
                 vttCue: new VTTCue(3, 4, "text"),
                 cueCategory: "DIALOGUE",
                 editDisabled: !inChunkRange(3, 4)
             });
             targetCues.push({
-                id: "cue-trg-1000003",
                 vttCue: new VTTCue(4, 5, "text"),
                 cueCategory: "DIALOGUE",
                 editDisabled: !inChunkRange(4, 5)
             });
             targetCues.push({
-                id: "cue-trg-1000004",
                 vttCue: new VTTCue(5, 6, "text"),
                 cueCategory: "DIALOGUE",
                 editDisabled: !inChunkRange(5, 6)
             });
 
             targetCues.push({
-                id: "cue-trg-1000005",
                 vttCue: new VTTCue(7.087, 10.048, "text"),
                 cueCategory: "DIALOGUE",
                 editDisabled: !inChunkRange(7.087, 10.048)
             });
             targetCues.push({
-                id: "cue-trg-1000006",
                 vttCue: new VTTCue(10.411, 11.231, "text"),
                 cueCategory: "DIALOGUE",
                 editDisabled: !inChunkRange(10.411, 11.231)
             });
             targetCues.push({
-                id: "cue-trg-1000007",
                 vttCue: new VTTCue(11.240, 13.985, "text"),
                 cueCategory: "DIALOGUE",
                 editDisabled: !inChunkRange(11.240, 13.985)
             });
             targetCues.push({
-                id: "cue-trg-1000008",
                 vttCue: new VTTCue(14.380, 16.998, "text"),
                 cueCategory: "DIALOGUE",
                 editDisabled: !inChunkRange(14.380, 16.998)
             });
 
             targetCues.push({
-                id: "cue-trg-1000009",
                 vttCue: new VTTCue(20.140, 21.494, "text"),
                 cueCategory: "DIALOGUE",
                 editDisabled: !inChunkRange(20.140, 21.494)
             });
             targetCues.push({
-                id: "cue-trg-1000010",
                 vttCue: new VTTCue(21.979, 22.055, "text"),
                 cueCategory: "DIALOGUE",
                 editDisabled: !inChunkRange(21.979, 22.055)
             });
             targetCues.push({
-                id: "cue-trg-1000011",
                 vttCue: new VTTCue(22.414, 25.209, "text"),
                 cueCategory: "DIALOGUE",
                 editDisabled: !inChunkRange(22.414, 25.209)
             });
             targetCues.push({
-                id: "cue-trg-1000012",
                 vttCue: new VTTCue(26.198, 27.412, "text"),
                 cueCategory: "DIALOGUE",
                 editDisabled: !inChunkRange(26.198, 27.412)
@@ -266,7 +241,6 @@ const TestApp = (): ReactElement => {
                 });
             }
             targetCues.push({
-                id: `cue-trg-${idx}`,
                 vttCue: new VTTCue(randomStart, randomEnd, text),
                 cueCategory: "DIALOGUE",
                 editDisabled: !withinChunkRange,
@@ -279,7 +253,7 @@ const TestApp = (): ReactElement => {
             () => dispatch(updateCues(targetCues)),
             500
         );
-    }, [dispatch]);
+    });
 
     // ################################## Track ###########################################
     useEffect(() => {
@@ -306,7 +280,7 @@ const TestApp = (): ReactElement => {
             } as Track)),
             500
         );
-    }, [dispatch]);
+    });
 
     // ################################## User ###########################################
     useEffect(() => {
@@ -322,7 +296,7 @@ const TestApp = (): ReactElement => {
             () => dispatch(updateSubtitleUser(subtitleUser)),
             500
         );
-    }, [dispatch]);
+    });
 
     // ################################## Subtitle Specs ###########################################
     useEffect(() => {
@@ -346,7 +320,7 @@ const TestApp = (): ReactElement => {
             })),
             500
         );
-    }, [dispatch]);
+    });
 
     const video = `https://dotsub-media-encoded.s3.amazonaws.com/sample/${LONG_VIDEO_TESTING
         ? "my-long-movie"
@@ -359,16 +333,12 @@ const TestApp = (): ReactElement => {
             waveform={`${video}.json`}
             onViewTrackHistory={(): void => undefined}
             onSave={(): void => {
-                setTimeout(() => setSaveState("TRIGGERED"), 1);
-                setTimeout(() => setSaveState("SAVED"), 500);
-            }}
-            onUpdateCue={(): void => {
-                setTimeout(() => setSaveState("TRIGGERED"), 1);
-                setTimeout(() => setSaveState("SAVED"), 500);
-            }}
-            onDeleteCue={(): void => {
-                setTimeout(() => setSaveState("TRIGGERED"), 1);
-                setTimeout(() => setSaveState("SAVED"), 500);
+                setTimeout(
+                    () => {
+                        dispatch(setAutoSaveSuccess(true));
+                    }, 500
+                );
+                return;
             }}
             onComplete={(): void => undefined}
             onExportSourceFile={(): void => undefined}
@@ -376,7 +346,6 @@ const TestApp = (): ReactElement => {
             onImportFile={(): void => undefined}
             spellCheckerDomain="dev-spell-checker.videotms.com"
             commentAuthor="Linguist"
-            saveState={saveState}
         />
     );
 };

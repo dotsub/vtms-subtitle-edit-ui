@@ -10,19 +10,14 @@ import { createTestingStore } from "../../../testUtils/testingStore";
 import { updateCues } from "../cuesList/cuesListActions";
 import { updateSourceCues } from "../view/sourceCueSlices";
 import { updateEditingTrack } from "../../trackSlices";
-import { saveCueUpdateSlice } from "../saveCueUpdateSlices";
 
 let testingStore = createTestingStore();
 const testTrack = { mediaTitle: "testingTrack", language: { id: "en-US", name: "English", direction: "LTR" }};
-
-const updateCueMock = jest.fn();
 
 describe("AddCueLineButton", () => {
     beforeEach(() => {
         testingStore = createTestingStore();
         testingStore.dispatch(updateEditingTrack(testTrack as Track) as {} as AnyAction);
-        testingStore.dispatch(saveCueUpdateSlice.actions.setUpdateCueCallback(updateCueMock));
-        jest.clearAllMocks();
     });
 
     it("renders", () => {

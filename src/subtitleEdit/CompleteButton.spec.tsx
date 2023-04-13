@@ -7,7 +7,8 @@ import { updateEditingTrack } from "./trackSlices";
 import { AnyAction } from "@reduxjs/toolkit";
 import { CueDto, Track } from "./model";
 import { updateCues } from "./cues/cuesList/cuesListActions";
-import { setSaveTrack } from "./cues/saveSlices";
+import { SaveState, saveActionSlice, setSaveTrack } from "./cues/saveSlices";
+import each from "jest-each";
 
 const testingTrack = {
     type: "CAPTION",
@@ -54,7 +55,7 @@ describe("CompleteButton", () => {
         // WHEN
         const actualNode = mount(
             <Provider store={testingStore}>
-                <CompleteButton onComplete={jest.fn()} saveState={"NONE"} />
+                <CompleteButton onComplete={jest.fn()} />
             </Provider>
         );
 
@@ -86,7 +87,7 @@ describe("CompleteButton", () => {
         // WHEN
         const actualNode = mount(
             <Provider store={testingStore}>
-                <CompleteButton onComplete={jest.fn()} disabled saveState={"NONE"} />
+                <CompleteButton onComplete={jest.fn()} disabled />
             </Provider>
         );
 
@@ -94,74 +95,52 @@ describe("CompleteButton", () => {
         expect(actualNode.html()).toEqual(expectedNode.html());
     });
 
-    it("renders with disabled property and save state TRIGGERED", () => {
-        // GIVEN
-        const expectedNode = mount(
-            <Provider store={testingStore}>
-                <div className="space-x-4 flex items-center">
-                    <div className="font-medium">
-                        <span className="flex items-center ">
-                            <span className="leading-none">Saving changes</span>
-                            <i className="ml-2 fa-duotone fa-sync fa-spin" />
-                        </span>
+    each([
+        [ SaveState.TRIGGERED ],
+        [ SaveState.REQUEST_SENT ],
+        [ SaveState.RETRY ],
+    ])
+        .it("renders save pending for save state '%s'", (testingState: SaveState) => {
+            // GIVEN
+            testingStore.dispatch(saveActionSlice.actions.setState(
+                { saveState: testingState, multiCuesEdit: false }
+            ) as {} as AnyAction);
+            const expectedNode = mount(
+                <Provider store={testingStore}>
+                    <div className="space-x-4 flex items-center">
+                        <div className="font-medium">
+                            <span className="flex items-center ">
+                                <span className="leading-none">Saving changes</span>
+                                <i className="ml-2 fa-duotone fa-sync fa-spin" />
+                            </span>
+                        </div>
+                        <button
+                            type="button"
+                            className="sbte-btn sbte-btn-primary sbte-complete-subtitle-sbte-btn"
+                            disabled
+                        >
+                            Complete
+                        </button>
                     </div>
-                    <button
-                        type="button"
-                        className="sbte-btn sbte-btn-primary sbte-complete-subtitle-sbte-btn"
-                        disabled
-                    >
-                        Complete
-                    </button>
-                </div>
-            </Provider>
-        );
+                </Provider>
+            );
 
-        // WHEN
-        const actualNode = mount(
-            <Provider store={testingStore}>
-                <CompleteButton onComplete={jest.fn()} disabled saveState={"TRIGGERED"} />
-            </Provider>
-        );
+            // WHEN
+            const actualNode = mount(
+                <Provider store={testingStore}>
+                    <CompleteButton onComplete={jest.fn()} />
+                </Provider>
+            );
 
-        // THEN
-        expect(actualNode.html()).toEqual(expectedNode.html());
-    });
-
-    it("renders save pending for save state TRIGGERED", () => {
-        // GIVEN
-        const expectedNode = mount(
-            <Provider store={testingStore}>
-                <div className="space-x-4 flex items-center">
-                    <div className="font-medium">
-                        <span className="flex items-center ">
-                            <span className="leading-none">Saving changes</span>
-                            <i className="ml-2 fa-duotone fa-sync fa-spin" />
-                        </span>
-                    </div>
-                    <button
-                        type="button"
-                        className="sbte-btn sbte-btn-primary sbte-complete-subtitle-sbte-btn"
-                        disabled
-                    >
-                        Complete
-                    </button>
-                </div>
-            </Provider>
-        );
-
-        // WHEN
-        const actualNode = mount(
-            <Provider store={testingStore}>
-                <CompleteButton onComplete={jest.fn()} saveState={"TRIGGERED"} />
-            </Provider>
-        );
-
-        // THEN
-        expect(actualNode.html()).toEqual(expectedNode.html());
-    });
+            // THEN
+            expect(actualNode.html()).toEqual(expectedNode.html());
+        });
 
     it("renders save succeeded for save state SAVED", () => {
         // GIVEN
+        testingStore.dispatch(saveActionSlice.actions.setState(
+            { saveState: SaveState.SAVED, multiCuesEdit: false }
+        ) as {} as AnyAction);
         const expectedNode = mount(
             <Provider store={testingStore}>
                 <div className="space-x-4 flex items-center">
@@ -181,7 +160,7 @@ describe("CompleteButton", () => {
         // WHEN
         const actualNode = mount(
             <Provider store={testingStore}>
-                <CompleteButton onComplete={jest.fn()} saveState={"SAVED"} />
+                <CompleteButton onComplete={jest.fn()} />
             </Provider>
         );
 
@@ -191,6 +170,9 @@ describe("CompleteButton", () => {
 
     it("renders save succeeded for save state ERROR", () => {
         // GIVEN
+        testingStore.dispatch(saveActionSlice.actions.setState(
+            { saveState: SaveState.ERROR, multiCuesEdit: false }
+        ) as {} as AnyAction);
         const expectedNode = mount(
             <Provider store={testingStore}>
                 <div className="space-x-4 flex items-center">
@@ -210,7 +192,7 @@ describe("CompleteButton", () => {
         // WHEN
         const actualNode = mount(
             <Provider store={testingStore}>
-                <CompleteButton onComplete={jest.fn()} saveState={"ERROR"} />
+                <CompleteButton onComplete={jest.fn()} />
             </Provider>
         );
 
@@ -225,7 +207,7 @@ describe("CompleteButton", () => {
         testingStore.dispatch(updateCues(cues) as {} as AnyAction);
         const actualNode = mount(
             <Provider store={testingStore}>
-                <CompleteButton onComplete={mockOnComplete} saveState={"NONE"} />
+                <CompleteButton onComplete={mockOnComplete} />
             </Provider>
         );
 

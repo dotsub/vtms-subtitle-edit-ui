@@ -23,7 +23,7 @@ import { constructCueValuesArray, copyNonConstructorProperties } from "../cueUti
 import { convertVttToHtml, getVttText } from "./cueTextConverter";
 import CueLineCounts from "../cueLine/CueLineCounts";
 import InlineStyleButton from "./InlineStyleButton";
-import { applySpellcheckerOnCue, checkErrors, updateVttCueTextOnly } from "../cuesList/cuesListActions";
+import { applySpellcheckerOnCue, checkErrors, updateVttCue } from "../cuesList/cuesListActions";
 import { SpellCheck } from "../spellCheck/model";
 import { SpellCheckIssue } from "../spellCheck/SpellCheckIssue";
 
@@ -35,7 +35,6 @@ import { hasIgnoredKeyword } from "../spellCheck/spellCheckerUtils";
 import { SubtitleSpecification } from "../../toolbox/model";
 import { Track } from "../../model";
 import { SearchReplaceIndices } from "../searchReplace/model";
-import { callSaveCueUpdate } from "../saveCueUpdateSlices";
 
 const findSpellCheckIssues = (props: CueTextEditorProps, editingTrack: Track | null, spellcheckerEnabled: boolean) =>
     (_contentBlock: ContentBlock, callback: Function): void => {
@@ -138,8 +137,7 @@ const changeVttCueInRedux = (
     const vttText = getVttText(currentContent);
     const vttCue = new VTTCue(props.vttCue.startTime, props.vttCue.endTime, vttText);
     copyNonConstructorProperties(vttCue, props.vttCue);
-    dispatch(updateVttCueTextOnly(props.index, vttCue, props.editUuid));
-    dispatch(callSaveCueUpdate(props.index));
+    dispatch(updateVttCue(props.index, vttCue, props.editUuid, true));
     if (replacement !== "") {
         dispatch(searchNextCues());
     }

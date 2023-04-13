@@ -1,7 +1,7 @@
 import { CueCategory, CueDto, CueDtoWithIndex, CueLineDto } from "../../model";
 import { copyNonConstructorProperties, Position, positionStyles } from "../cueUtils";
 import { Dispatch, ReactElement, useEffect } from "react";
-import { addCue, saveTrack, updateCueCategory, updateVttCue } from "../cuesList/cuesListActions";
+import { addCue, updateCueCategory, updateVttCue } from "../cuesList/cuesListActions";
 import { AppThunk, SubtitleEditState } from "../../subtitleEditReducers";
 import CueCategoryButton from "./CueCategoryButton";
 import CueTextEditor from "./CueTextEditor";
@@ -112,15 +112,6 @@ const CueEdit = (props: CueEditProps): ReactElement => {
     const timecodesUnlocked = editingTrack?.timecodesUnlocked;
     const cueLineId = `cueEditLine-${props.index}`;
 
-    useEffect(() => {
-        const isChunkSlugTrack = editingTrack?.mediaChunkStart !== undefined && !editingTrack.id;
-        if (isChunkSlugTrack) {
-            dispatch(saveTrack());
-        }
-        // no need for dependencies here since editingTrack.id changing is driver
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ dispatch, editingTrack?.id ]);
-
     return (
         <div style={{ display: "flex" }} className="border-b border-blue-light-mostly-transparent bg-white z-10">
             <div
@@ -218,7 +209,7 @@ const CueEdit = (props: CueEditProps): ReactElement => {
                 style={{ flex: "1 1 70%" }}
             >
                 <CueTextEditor
-                    key={props.cue.id || props.index}
+                    key={props.index}
                     index={props.index}
                     vttCue={props.cue.vttCue}
                     editUuid={props.cue.editUuid}

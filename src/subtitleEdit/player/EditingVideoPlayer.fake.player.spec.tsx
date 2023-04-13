@@ -14,7 +14,6 @@ import { updateCues, updateVttCue, } from "../cues/cuesList/cuesListActions";
 import { render } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import { ReactElement } from "react";
-import { saveCueUpdateSlice } from "../cues/saveCueUpdateSlices";
 
 // eslint-disable-next-line react/display-name
 jest.mock("./VideoPlayer", () => (): ReactElement => <div>VideoPlayer</div>);
@@ -32,15 +31,12 @@ const testingCues = [
     { vttCue: new VTTCue(1.225, 2, "Caption Line 2"), cueCategory: "DIALOGUE" },
 ] as CueDto[];
 
-const updateCueMock = jest.fn();
-
 describe("EditingVideoPlayer", () => {
     beforeEach(() => {
         testingStore = createTestingStore();
-        testingStore.dispatch(saveCueUpdateSlice.actions.setUpdateCueCallback(updateCueMock));
     });
     afterEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
     });
 
     it("passes down new video section to play", () => {

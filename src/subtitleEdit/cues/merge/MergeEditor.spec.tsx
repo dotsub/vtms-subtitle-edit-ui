@@ -2,15 +2,13 @@ import "../../../testUtils/initBrowserEnvironment";
 import { createTestingStore } from "../../../testUtils/testingStore";
 import { Provider } from "react-redux";
 import { AnyAction } from "@reduxjs/toolkit";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { CueDto, Track } from "../../model";
 import { addCuesToMergeList, updateCues } from "../cuesList/cuesListActions";
 import { setSaveTrack } from "../saveSlices";
 import { updateEditingTrack } from "../../trackSlices";
 import { showMerge } from "./mergeSlices";
 import MergeEditor from "./MergeEditor";
-import { saveCueUpdateSlice } from "../saveCueUpdateSlices";
-import { saveCueDeleteSlice } from "../saveCueDeleteSlices";
 
 let testingStore = createTestingStore();
 
@@ -104,10 +102,6 @@ describe("MergeEditor", () => {
         testingStore.dispatch(setSaveTrack(saveTrack) as {} as AnyAction);
         testingStore.dispatch(updateEditingTrack({ mediaTitle: "testingTrack" } as Track) as {} as AnyAction);
         testingStore.dispatch(updateCues(testingCues) as {} as AnyAction);
-        const updateCueMock = jest.fn();
-        testingStore.dispatch(saveCueUpdateSlice.actions.setUpdateCueCallback(updateCueMock));
-        const deleteCueMock = jest.fn();
-        testingStore.dispatch(saveCueDeleteSlice.actions.setDeleteCueCallback(deleteCueMock));
         testingStore.dispatch(addCuesToMergeList(
             { index: 0, cues: [{ index: 0, cue: testingCues[0] }]}) as {} as AnyAction);
         testingStore.dispatch(addCuesToMergeList(
@@ -123,11 +117,9 @@ describe("MergeEditor", () => {
         fireEvent.click(mergeButton);
 
         // THEN
+        await waitFor(() => expect(saveTrack).toHaveBeenCalledTimes(1), { timeout: 3000 });
         expect(testingStore.getState().cues.length).toEqual(2);
         expect(testingStore.getState().cues[0].vttCue.text).toEqual("Caption Line 1\nCaption Line 2");
         expect(testingStore.getState().cues[1].vttCue.text).toEqual("Caption Line 3");
-        expect(updateCueMock).toHaveBeenCalledTimes(1);
-        expect(deleteCueMock).toHaveBeenCalledTimes(2);
-        expect(saveTrack).not.toBeCalled();
     });
 });

@@ -48,12 +48,7 @@ describe("Toolbox", () => {
         // WHEN
         const actualNode = render(
             <Provider store={testingStore}>
-                <Toolbox
-                    handleExportSourceFile={jest.fn()}
-                    handleExportFile={jest.fn()}
-                    handleImportFile={jest.fn()}
-                    saveState="NONE"
-                />
+                <Toolbox handleExportSourceFile={jest.fn()} handleExportFile={jest.fn()} handleImportFile={jest.fn()} />
             </Provider>
         );
         testingStore.dispatch(
@@ -101,12 +96,7 @@ describe("Toolbox", () => {
         // WHEN
         const actualNode = render(
             <Provider store={testingStore}>
-                <Toolbox
-                    handleExportSourceFile={jest.fn()}
-                    handleExportFile={jest.fn()}
-                    handleImportFile={jest.fn()}
-                    saveState="NONE"
-                />
+                <Toolbox handleExportSourceFile={jest.fn()} handleExportFile={jest.fn()} handleImportFile={jest.fn()} />
             </Provider>
         );
 
@@ -123,7 +113,6 @@ describe("Toolbox", () => {
                     handleExportSourceFile={jest.fn()}
                     handleExportFile={mockExportFile}
                     handleImportFile={jest.fn()}
-                    saveState="NONE"
                 />
             </Provider>
         );
@@ -144,7 +133,6 @@ describe("Toolbox", () => {
                     handleExportSourceFile={jest.fn()}
                     handleExportFile={jest.fn()}
                     handleImportFile={mockImportFile}
-                    saveState="NONE"
                 />
             </Provider>
         );
@@ -165,7 +153,6 @@ describe("Toolbox", () => {
                     handleExportSourceFile={mockExportSourceFile}
                     handleExportFile={jest.fn()}
                     handleImportFile={jest.fn()}
-                    saveState="NONE"
                 />
             </Provider>
         );
@@ -185,7 +172,6 @@ describe("Toolbox", () => {
                     handleExportSourceFile={jest.fn()}
                     handleExportFile={jest.fn()}
                     handleImportFile={jest.fn()}
-                    saveState="NONE"
                 />
             </Provider>
         );
@@ -208,7 +194,6 @@ describe("Toolbox", () => {
                     handleExportSourceFile={jest.fn()}
                     handleExportFile={jest.fn()}
                     handleImportFile={jest.fn()}
-                    saveState="NONE"
                 />
             </Provider>
         );
@@ -244,7 +229,6 @@ describe("Toolbox", () => {
                     handleExportSourceFile={jest.fn()}
                     handleExportFile={jest.fn()}
                     handleImportFile={jest.fn()}
-                    saveState="NONE"
                 />
             </Provider>
         );
@@ -271,7 +255,6 @@ describe("Toolbox", () => {
                     handleExportSourceFile={mockExportSourceFile}
                     handleExportFile={jest.fn()}
                     handleImportFile={jest.fn()}
-                    saveState="NONE"
                 />
             </Provider>
         );

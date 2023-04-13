@@ -3,7 +3,7 @@ import CompleteButton from "./CompleteButton";
 import { Tooltip } from "primereact/tooltip";
 import { useDispatch } from "react-redux";
 import { changeScrollPosition } from "./cues/cuesList/cuesListScrollSlice";
-import { TrackCues, ScrollPosition, SaveState } from "./model";
+import { TrackCues, ScrollPosition } from "./model";
 import { Track } from "./model";
 
 export interface Props {
@@ -11,7 +11,6 @@ export interface Props {
     editingTrack: Track | null;
     onComplete: (completeAction: TrackCues) => void;
     editDisabled?: boolean;
-    saveState: SaveState;
 }
 
 const CueListToolbar = (props: Props): ReactElement => {
@@ -136,7 +135,6 @@ const CueListToolbar = (props: Props): ReactElement => {
             <CompleteButton
                 onComplete={props.onComplete}
                 disabled={props.editDisabled}
-                saveState={props.saveState}
             />
         </div>
     );

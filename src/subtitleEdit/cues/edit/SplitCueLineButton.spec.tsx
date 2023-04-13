@@ -10,7 +10,6 @@ import { createTestingStore } from "../../../testUtils/testingStore";
 import { updateEditingTrack } from "../../trackSlices";
 import { updateCues } from "../cuesList/cuesListActions";
 import { lastCueChangeSlice } from "./cueEditorSlices";
-import { saveCueUpdateSlice } from "../saveCueUpdateSlices";
 
 let testingStore = createTestingStore();
 const testTrack = {
@@ -138,8 +137,6 @@ describe("SplitCueLineButton", () => {
         // GIVEN
         testingStore.dispatch(updateCues(testingCues) as {} as AnyAction);
         testingStore.dispatch(updateEditingTrack(testTrack as Track) as {} as AnyAction);
-        const updateCueMock = jest.fn();
-        testingStore.dispatch(saveCueUpdateSlice.actions.setUpdateCueCallback(updateCueMock));
         const recordCueChangeSpy = jest.spyOn(lastCueChangeSlice.actions, "recordCueChange");
 
 
@@ -175,7 +172,7 @@ describe("SplitCueLineButton", () => {
                 "vttCue": { ...testingCues[0].vttCue, startTime: 1, endTime: 2, hasBeenReset: true, text: "" }
             });
         });
-        expect(updateCueMock).toHaveBeenCalledTimes(2);
+
 
     });
 });

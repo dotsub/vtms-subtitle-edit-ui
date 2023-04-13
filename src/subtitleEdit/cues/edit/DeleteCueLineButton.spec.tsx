@@ -9,17 +9,22 @@ import { updateCues } from "../cuesList/cuesListActions";
 import { setSaveTrack } from "../saveSlices";
 import { updateEditingTrack } from "../../trackSlices";
 import { createTestingStore } from "../../../testUtils/testingStore";
-import { saveCueDeleteSlice } from "../saveCueDeleteSlices";
+
+jest.mock("lodash", () => ({
+    debounce: (callback: Function): Function => callback,
+    sortBy: jest.requireActual("lodash/sortBy"),
+    findIndex: jest.requireActual("lodash/findIndex")
+}));
 
 let testingStore = createTestingStore();
 
-const deleteCueMock = jest.fn();
-
 describe("DeleteCueLineButton", () => {
+    const saveTrack = jest.fn();
 
     beforeEach(() => {
         testingStore = createTestingStore();
-        testingStore.dispatch(saveCueDeleteSlice.actions.setDeleteCueCallback(deleteCueMock));
+        testingStore.dispatch(setSaveTrack(saveTrack) as {} as AnyAction);
+        testingStore.dispatch(updateEditingTrack({} as Track) as {} as AnyAction);
     });
 
     it("renders", () => {
@@ -73,15 +78,11 @@ describe("DeleteCueLineButton", () => {
         expect(testingStore.getState().cues[0].vttCue.endTime).toEqual(2);
     });
 
-    it("calls deleteCueCallback in redux store when delete button is clicked", () => {
+    it("calls saveTrack in redux store when delete button is clicked", () => {
         // GIVEN
-        const saveTrack = jest.fn();
-        testingStore.dispatch(setSaveTrack(saveTrack) as {} as AnyAction);
-        testingStore.dispatch(setSaveTrack(saveTrack) as {} as AnyAction);
-        testingStore.dispatch(updateEditingTrack({} as Track) as {} as AnyAction);
         const cues = [
-            { id: "test-cue-1", vttCue: new VTTCue(0, 1, "Cue 1"), cueCategory: "DIALOGUE" },
-            { id: "test-cue-2", vttCue: new VTTCue(1, 2, "Cue 2"), cueCategory: "DIALOGUE" },
+            { vttCue: new VTTCue(0, 1, "Cue 1"), cueCategory: "DIALOGUE" },
+            { vttCue: new VTTCue(1, 2, "Cue 2"), cueCategory: "DIALOGUE" },
         ] as CueDto[];
         testingStore.dispatch(updateCues(cues) as {} as AnyAction);
         const actualNode = mount(
@@ -89,14 +90,12 @@ describe("DeleteCueLineButton", () => {
                 <DeleteCueLineButton cueIndex={0} />
             </Provider>
         );
+        saveTrack.mockReset();
 
         // WHEN
         actualNode.find(".sbte-delete-cue-button").simulate("click");
 
         // THEN
-        expect(deleteCueMock).toHaveBeenCalledWith(
-            { "cue": cues[0], "editingTrack": { "timecodesUnlocked": true }}
-        );
-        expect(saveTrack).not.toBeCalled();
+        expect(saveTrack).toHaveBeenCalledTimes(1);
     });
 });

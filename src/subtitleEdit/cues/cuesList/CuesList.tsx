@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { isDirectTranslationTrack } from "../../utils/subtitleEditUtils";
 import AddCueLineButton from "../edit/AddCueLineButton";
-import { TrackCues, CueLineDto, ScrollPosition, Track, SaveState } from "../../model";
+import { TrackCues, CueLineDto, ScrollPosition, Track } from "../../model";
 import CueLine from "../cueLine/CueLine";
 import { addCue } from "./cuesListActions";
 import { SubtitleEditState } from "../../subtitleEditReducers";
@@ -22,7 +22,6 @@ interface Props {
     editDisabled?: boolean;
     onViewTrackHistory: () => void;
     onComplete: (completeAction: TrackCues) => void;
-    saveState: SaveState;
 }
 
 const CuesList = (props: Props): ReactElement => {
@@ -185,7 +184,6 @@ const CuesList = (props: Props): ReactElement => {
                 editingTrack={props.editingTrack}
                 onComplete={props.onComplete}
                 editDisabled={props.editDisabled}
-                saveState={props.saveState}
             />
         </div>
     );

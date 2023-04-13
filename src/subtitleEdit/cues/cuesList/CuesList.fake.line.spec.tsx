@@ -114,7 +114,6 @@ describe("CuesList", () => {
                             editingTrack={testingCaptionTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -128,7 +127,6 @@ describe("CuesList", () => {
                         editingTrack={testingCaptionTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -194,7 +192,6 @@ describe("CuesList", () => {
                             editingTrack={testingDirectTranslationTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -208,7 +205,6 @@ describe("CuesList", () => {
                         editingTrack={testingDirectTranslationTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -289,7 +285,6 @@ describe("CuesList", () => {
                             editingTrack={testingTranslationTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -303,7 +298,6 @@ describe("CuesList", () => {
                         editingTrack={testingTranslationTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -369,7 +363,6 @@ describe("CuesList", () => {
                             editingTrack={testingTranslationTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -383,7 +376,6 @@ describe("CuesList", () => {
                         editingTrack={testingTranslationTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -458,7 +450,6 @@ describe("CuesList", () => {
                             editingTrack={testingTranslationTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -472,7 +463,6 @@ describe("CuesList", () => {
                         editingTrack={testingTranslationTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -554,7 +544,6 @@ describe("CuesList", () => {
                             editingTrack={testingTranslationTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -568,7 +557,6 @@ describe("CuesList", () => {
                         editingTrack={testingTranslationTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -643,7 +631,6 @@ describe("CuesList", () => {
                             editingTrack={testingTranslationTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -657,7 +644,6 @@ describe("CuesList", () => {
                         editingTrack={testingTranslationTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -739,7 +725,6 @@ describe("CuesList", () => {
                             editingTrack={testingTranslationTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -753,7 +738,6 @@ describe("CuesList", () => {
                         editingTrack={testingTranslationTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -810,7 +794,6 @@ describe("CuesList", () => {
                             editingTrack={testingTranslationTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -824,7 +807,6 @@ describe("CuesList", () => {
                         editingTrack={testingTranslationTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -883,7 +865,6 @@ describe("CuesList", () => {
                             editingTrack={testingTranslationTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -897,7 +878,6 @@ describe("CuesList", () => {
                         editingTrack={testingTranslationTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -976,7 +956,6 @@ describe("CuesList", () => {
                             editingTrack={testingTranslationTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -990,7 +969,6 @@ describe("CuesList", () => {
                         editingTrack={testingTranslationTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -1069,7 +1047,6 @@ describe("CuesList", () => {
                             editingTrack={testingTranslationTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -1083,7 +1060,6 @@ describe("CuesList", () => {
                         editingTrack={testingTranslationTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -1151,7 +1127,6 @@ describe("CuesList", () => {
                             editingTrack={testingTranslationTrack}
                             onViewTrackHistory={jest.fn()}
                             onComplete={jest.fn()}
-                            saveState="NONE"
                         />
                     </div>
                 </Provider >
@@ -1165,7 +1140,6 @@ describe("CuesList", () => {
                         editingTrack={testingTranslationTrack}
                         onComplete={jest.fn()}
                         onViewTrackHistory={jest.fn()}
-                        saveState="NONE"
                     />
                 </Provider >
             );
@@ -1183,7 +1157,6 @@ describe("CuesList", () => {
                     editingTrack={testingDirectTranslationTrack}
                     onComplete={jest.fn()}
                     onViewTrackHistory={jest.fn()}
-                    saveState="NONE"
                 />
             </Provider >
         );
@@ -1214,7 +1187,6 @@ describe("CuesList", () => {
                     editingTrack={testingDirectTranslationTrack}
                     onComplete={jest.fn()}
                     onViewTrackHistory={jest.fn()}
-                    saveState="NONE"
                 />
             </Provider >
         );
@@ -1246,7 +1218,6 @@ describe("CuesList", () => {
                     editingTrack={testingDirectTranslationTrack}
                     onComplete={jest.fn()}
                     onViewTrackHistory={jest.fn()}
-                    saveState="NONE"
                 />
             </Provider >
         );
@@ -1275,6 +1246,6 @@ describe("CuesList", () => {
         // THEN
         expect(testEnterBinding).toHaveBeenCalled();
         expect(testingStore.getState().cues.length).toEqual(3);
-        expect(testingStore.getState().editingCueIndex).toEqual(0);
+        expect(testingStore.getState().editingCueIndex).toEqual(-1);
     });
 });

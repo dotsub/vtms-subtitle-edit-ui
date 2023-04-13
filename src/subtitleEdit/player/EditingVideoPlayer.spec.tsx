@@ -12,7 +12,6 @@ import { updateCues } from "../cues/cuesList/cuesListActions";
 import { updateEditingTrack } from "../trackSlices";
 import { act } from "react-dom/test-utils";
 import { waveformVisibleSlice } from "./waveformSlices";
-import { saveCueUpdateSlice } from "../cues/saveCueUpdateSlices";
 
 let testingStore = createTestingStore();
 
@@ -35,13 +34,8 @@ jest.spyOn(global, "fetch").mockResolvedValue({
     })
 });
 
-const updateCueMock = jest.fn();
-
 describe("EditingVideoPlayer", () => {
-    beforeEach(() => {
-        testingStore = createTestingStore();
-        testingStore.dispatch(saveCueUpdateSlice.actions.setUpdateCueCallback(updateCueMock));
-    });
+    beforeEach(() => testingStore = createTestingStore());
 
     it("renders without player if track is not defined", () => {
         // GIVEN

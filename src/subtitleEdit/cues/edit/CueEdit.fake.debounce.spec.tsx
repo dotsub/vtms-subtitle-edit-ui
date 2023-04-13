@@ -30,7 +30,6 @@ import { updateEditingCueIndex } from "./cueEditorSlices";
 import { CueActionsPanel } from "../cueLine/CueActionsPanel";
 import { setCurrentPlayerTime } from "../cuesList/cuesListScrollSlice";
 import { setFind, showSearchReplace } from "../searchReplace/searchReplaceSlices";
-import { saveCueUpdateSlice } from "../saveCueUpdateSlices";
 
 jest.mock("lodash", () => (
     {
@@ -51,8 +50,8 @@ fetchSpellCheck.mockImplementation(() => jest.fn());
 let testingStore = createTestingStore();
 
 const cues = [
-    { id: "cue-1", vttCue: new VTTCue(0, 2, "Caption Line 1"), cueCategory: "DIALOGUE" } as CueDto,
-    { id: "cue-2", vttCue: new VTTCue(3, 7, "Caption Line 2"), cueCategory: "DIALOGUE" } as CueDto
+    { vttCue: new VTTCue(0, 2, "Caption Line 1"), cueCategory: "DIALOGUE" } as CueDto,
+    { vttCue: new VTTCue(3, 7, "Caption Line 2"), cueCategory: "DIALOGUE" } as CueDto
 ];
 
 const testTrack = { mediaTitle: "testingTrack", language: { id: "en-US", name: "English", direction: "LTR" }};
@@ -65,8 +64,6 @@ const testTranslationTrack = {
     mediaLength: 4000,
     timecodesUnlocked: false
 } as Track;
-
-const updateCueMock = jest.fn();
 
 describe("CueEdit", () => {
     beforeEach(() => {
@@ -83,8 +80,6 @@ describe("CueEdit", () => {
         testingStore.dispatch(readSubtitleSpecification(testingSubtitleSpecification) as {} as AnyAction);
         testingStore.dispatch(updateCues(cues) as {} as AnyAction);
         testingStore.dispatch(setSpellCheckDomain("testing-domain") as {} as AnyAction);
-        testingStore.dispatch(saveCueUpdateSlice.actions.setUpdateCueCallback(updateCueMock));
-        jest.resetAllMocks();
     });
 
     // TODO: this treting section is almost all the test cases, we really need to granulate it further
@@ -392,31 +387,6 @@ describe("CueEdit", () => {
             expect(actual).toEqual(expected);
         });
 
-        it("should rerender cue text editor when cue ID changes because of reload", () => {
-            // GIVEN
-            const vttCue = new VTTCue(0, 2, "someText");
-            const editUuid = testingStore.getState().cues[0].editUuid;
-            const cue = { id: "cue-test-id", vttCue, cueCategory: "ONSCREEN_TEXT", editUuid } as CueDto;
-            const { container, rerender } = render(
-                <Provider store={testingStore} >
-                    <CueEdit index={0} cue={cue} setGlossaryTerm={jest.fn()} matchedCuesIndex={0} />
-                </Provider>
-            );
-            const newCue = { ...cue, id: "cue-test-id-2" };
-            newCue.vttCue.text = "some change in the cue text";
-
-            // WHEN
-            rerender(
-                <Provider store={testingStore} >
-                    <CueEdit index={0} cue={newCue} setGlossaryTerm={jest.fn()} matchedCuesIndex={0} />
-                </Provider>
-            );
-
-            // THEN
-            const editor = container.querySelector(".public-DraftEditor-content") as Element;
-            expect(editor.outerHTML).toContain("some change in the cue text");
-        });
-
         it("updates cue in redux store when start time minutes changed", () => {
             // GIVEN
             testingStore.dispatch(
@@ -477,39 +447,13 @@ describe("CueEdit", () => {
             expect(testingStore.getState().cues[0].vttCue.startTime).toEqual(.865);
         });
 
-        it("calls saveTrack if editing track is media chunk slug track", () => {
-            // GIVEN
-            testingStore.dispatch(
-                updateEditingTrack( { ...testTrack, mediaChunkStart: 0 } as Track) as {} as AnyAction);
-            const saveTrack = jest.fn();
-            testingStore.dispatch(setSaveTrack(saveTrack) as {} as AnyAction);
-            const cue = {
-                vttCue: new VTTCue(0, 2, ""),
-                cueCategory: "DIALOGUE",
-                editUuid: testingStore.getState().cues[0].editUuid
-            } as CueDto;
-            testingStore.dispatch(setCurrentPlayerTime(0) as {} as AnyAction);
-
-            // WHEN
-            mount(
-                <Provider store={testingStore}>
-                    <CueEdit index={0} cue={cue} setGlossaryTerm={jest.fn()} matchedCuesIndex={0} />
-                </Provider>
-            );
-
-            // THEN
-            expect(saveTrack).toHaveBeenCalledTimes(1);
-            expect(updateCueMock).not.toHaveBeenCalled();
-        });
-
-        it("calls updateCue in redux store when start time changes", () => {
+        it("calls saveTrack in redux store when start time changes", () => {
             // GIVEN
             testingStore.dispatch(
                 updateEditingTrack( { ...testTrack, timecodesUnlocked: true } as Track) as {} as AnyAction);
             const saveTrack = jest.fn();
             testingStore.dispatch(setSaveTrack(saveTrack) as {} as AnyAction);
             const cue = {
-                id: "cue-1",
                 vttCue: new VTTCue(0, 2, "Caption Line 1"),
                 cueCategory: "DIALOGUE",
                 editUuid: testingStore.getState().cues[0].editUuid
@@ -527,8 +471,7 @@ describe("CueEdit", () => {
                 .simulate("change", { target: { value: "00:00:03.000", selectionEnd: 12 }});
 
             // THEN
-            expect(updateCueMock).toHaveBeenCalledTimes(1);
-            expect(saveTrack).not.toBeCalled();
+            expect(saveTrack).toHaveBeenCalledTimes(1);
         });
 
         it("updates cue in redux store when end time changed", () => {
@@ -551,15 +494,13 @@ describe("CueEdit", () => {
             expect(testingStore.getState().cues[0].vttCue.endTime).toEqual(2.22);
         });
 
-        it("calls updateCueSave in redux store when end time changes", () => {
+        it("calls saveTrack in redux store when end time changes", () => {
             // GIVEN
-            const testEditingTrack = { ...testTrack, timecodesUnlocked: true } as Track;
             testingStore.dispatch(
-                updateEditingTrack( testEditingTrack) as {} as AnyAction);
+                updateEditingTrack( { ...testTrack, timecodesUnlocked: true } as Track) as {} as AnyAction);
             const saveTrack = jest.fn();
             testingStore.dispatch(setSaveTrack(saveTrack) as {} as AnyAction);
             const cue = {
-                id: "cue-1",
                 vttCue: new VTTCue(3, 7, "Caption Line 2"),
                 cueCategory: "DIALOGUE",
                 editUuid: testingStore.getState().cues[0].editUuid
@@ -577,8 +518,7 @@ describe("CueEdit", () => {
                 .simulate("change", { target: { value: "00:00:05.500", selectionEnd: 12 }});
 
             // THEN
-            expect(updateCueMock).toHaveBeenCalled();
-            expect(saveTrack).not.toBeCalled();
+            expect(saveTrack).toHaveBeenCalledTimes(1);
         });
 
         it("maintains cue styling when start time changes", () => {
@@ -662,14 +602,13 @@ describe("CueEdit", () => {
             expect(testingStore.getState().cues[0].vttCue.position).toEqual(65);
         });
 
-        it("calls updateCue in redux store when cue position changes", () => {
+        it("calls saveTrack in redux store when cue position changes", () => {
             // GIVEN
             const saveTrack = jest.fn();
             testingStore.dispatch(setSaveTrack(saveTrack) as {} as AnyAction);
 
             const vttCue = new VTTCue(0, 1, "someText");
             const cue = {
-                id: "cue-1",
                 vttCue,
                 cueCategory: "DIALOGUE",
                 editUuid: testingStore.getState().cues[0].editUuid
@@ -685,8 +624,7 @@ describe("CueEdit", () => {
             actualNode.find(PositionButton).props().changePosition(Position.Row2Column5);
 
             // THEN
-            expect(updateCueMock).toHaveBeenCalledTimes(1);
-            expect(saveTrack).not.toBeCalled();
+            expect(saveTrack).toHaveBeenCalledTimes(1);
         });
 
         it("updates line category", () => {
@@ -708,13 +646,13 @@ describe("CueEdit", () => {
             expect(testingStore.getState().cues[0].cueCategory).toEqual("ONSCREEN_TEXT");
         });
 
-        it("calls updateCue in redux store when line category changes", () => {
+        it("calls saveTrack in redux store when line category changes", () => {
             // GIVEN
             const saveTrack = jest.fn();
             testingStore.dispatch(setSaveTrack(saveTrack) as {} as AnyAction);
 
             const vttCue = new VTTCue(0, 1, "someText");
-            const cue = { id: "cue-1", vttCue, cueCategory: "DIALOGUE" } as CueDto;
+            const cue = { vttCue, cueCategory: "DIALOGUE" } as CueDto;
             testingStore.dispatch(setCurrentPlayerTime(0) as {} as AnyAction);
             const actualNode = mount(
                 <Provider store={testingStore}>
@@ -727,8 +665,7 @@ describe("CueEdit", () => {
             actualNode.find("#cueCategoryMenu span").at(1).simulate("click");
 
             // THEN
-            expect(updateCueMock).toHaveBeenCalledTimes(1);
-            expect(saveTrack).not.toBeCalled();
+            expect(saveTrack).toHaveBeenCalledTimes(1);
         });
 
         it("passes down current line category", () => {

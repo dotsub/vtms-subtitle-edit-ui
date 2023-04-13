@@ -9,6 +9,10 @@ import { updateEditingTrack } from "../trackSlices";
 import { CueDto, Language, Track } from "../model";
 import { updateSourceCues } from "../cues/view/sourceCueSlices";
 
+jest.mock("lodash", () => ({
+    debounce: (callback: Function): Function => callback
+}));
+
 let testingStore = createTestingStore();
 
 const testTranslationTrack = {

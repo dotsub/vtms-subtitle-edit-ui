@@ -4,6 +4,10 @@ import InlineStyleButton from "./InlineStyleButton";
 import { createEvent, fireEvent, render } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 
+jest.mock("lodash", () => ({
+    debounce: (callback: Function): Function => callback
+}));
+
 /**
  * On click actions are covered by CueTextEditor tests
  */
