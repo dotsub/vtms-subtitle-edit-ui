@@ -1,9 +1,9 @@
-declare module "@dotsub/vtms-subtitle-edit-ui" {
+declare module "@dotsub/manucap" {
 
-    import SubtitleEdit from "../subtitleEdit/SubtitleEdit";
-    import { AppThunk, Reducers } from "../subtitleEdit/subtitleEditReducers";
-    import VideoPlayer, { Props as VideoPlayerProps } from "../subtitleEdit/player/VideoPlayer";
-    import { CueDto, Track, User } from "../subtitleEdit/model";
+    import ManuCap from "../manuCap/ManuCap";
+    import { AppThunk, Reducers } from "../manuCap/manuCapReducers";
+    import VideoPlayer, { Props as VideoPlayerProps } from "../manuCap/player/VideoPlayer";
+    import { CueDto, Track, User } from "../manuCap/model";
 
     const Actions: {
         updateEditingTrack: (track: Track) => AppThunk;
@@ -19,14 +19,14 @@ declare module "@dotsub/vtms-subtitle-edit-ui" {
     export {
         VideoPlayer,
         VideoPlayerProps,
-        SubtitleEdit,
+        ManuCap,
         Reducers,
         Actions,
         Hooks
     };
 }
 
-declare module "@dotsub/vtms-subtitle-edit-ui/models" {
+declare module "@dotsub/manucap/models" {
 
     import {
         CueDto,
@@ -42,7 +42,7 @@ declare module "@dotsub/vtms-subtitle-edit-ui/models" {
         TrackType,
         SaveTrackCue,
         SaveState
-    } from "../subtitleEdit/model";
+    } from "../manuCap/model";
 
     export {
         CueDto,

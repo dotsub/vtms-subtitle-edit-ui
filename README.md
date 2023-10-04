@@ -1,13 +1,11 @@
-# vtms-subtitle-edit-ui
+# manucap
 
->
-
-[![NPM](https://img.shields.io/npm/v/vtms-subtitle-edit-ui.svg)](https://www.npmjs.com/package/vtms-subtitle-edit-ui) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/manucap.svg)](https://www.npmjs.com/package/manucap)
 
 ## Install
 
 ```bash
-npm install --save vtms-subtitle-edit-ui
+npm install --save manucap
 ```
 
 ## Usage
@@ -15,10 +13,10 @@ npm install --save vtms-subtitle-edit-ui
 ```tsx
 import * as React from 'react'
 
-import SubtitleEdit from "vtms-subtitle-edit-ui";
+import ManuCap from "manucap";
 
 const Example = props => (
-    <SubtitleEdit.VideoPlayer
+    <ManuCap.VideoPlayer
         id="testvpid"
         poster="http://dotsub-media-encoded.s3.amazonaws.com/media/4/7/thumb.jpg"
         mp4="http://dotsub-media-encoded.s3.amazonaws.com/1/14/14.mp4"
@@ -45,7 +43,3 @@ When code is changed, all tests are rerun
 ```bash
 npm test
 ```
-
-## License
-
- © [Dotsub](https://github.com/dotsub)

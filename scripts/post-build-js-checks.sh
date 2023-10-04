@@ -5,9 +5,9 @@ GITHUB_TOKEN=$CD_GITHUB_TOKEN
 if (grep '<error' build/eslint.xml 1> /dev/null 2>&1) then
   sumEslint=$(cat build/eslint.xml | grep -o '<error' | wc -l)
   echo "ESLint found "${sumEslint}" issues!";
-  curl -H "Authorization: token $GITHUB_TOKEN" --request POST --data '{"state": "failure", "context": "travis-ci/ESLint", "description": "ESLint found '"${sumEslint}"' issues!"}' https://api.github.com/repos/dotsub/vtms-subtitle-edit-ui/statuses/${TRAVIS_COMMIT} > /dev/null
+  curl -H "Authorization: token $GITHUB_TOKEN" --request POST --data '{"state": "failure", "context": "travis-ci/ESLint", "description": "ESLint found '"${sumEslint}"' issues!"}' https://api.github.com/repos/dotsub/manucap/statuses/${TRAVIS_COMMIT} > /dev/null
 else
-  curl -H "Authorization: token $GITHUB_TOKEN" --request POST --data '{"state": "success", "context": "travis-ci/ESLint", "description": "ESLint Passed"}' https://api.github.com/repos/dotsub/vtms-subtitle-edit-ui/statuses/${TRAVIS_COMMIT} > /dev/null
+  curl -H "Authorization: token $GITHUB_TOKEN" --request POST --data '{"state": "success", "context": "travis-ci/ESLint", "description": "ESLint Passed"}' https://api.github.com/repos/dotsub/manucap/statuses/${TRAVIS_COMMIT} > /dev/null
 fi
 
 # Check console outputs from JS test suite
@@ -86,9 +86,9 @@ CONSOLE_PROBLEMS=$(cat */build/js-build.log | \
   pcregrep -Mc '(\A\s*console\..*\n.*)|(Network Error)|(ECONNREFUSED)|(UnhandledPromiseRejectionWarning)')
 
 if (( CONSOLE_PROBLEMS > 0 )); then
-  curl -H "Authorization: token $GITHUB_TOKEN" --request POST --data '{"state": "failure", "context": "travis-ci/console-issues", "description": "Found '"${CONSOLE_PROBLEMS}"' browser console issues!"}' https://api.github.com/repos/dotsub/vtms-subtitle-edit-ui/statuses/${TRAVIS_COMMIT} > /dev/null
+  curl -H "Authorization: token $GITHUB_TOKEN" --request POST --data '{"state": "failure", "context": "travis-ci/console-issues", "description": "Found '"${CONSOLE_PROBLEMS}"' browser console issues!"}' https://api.github.com/repos/dotsub/manucap/statuses/${TRAVIS_COMMIT} > /dev/null
   echo $CONSOLE_PROBLEMS
 else
-  curl -H "Authorization: token $GITHUB_TOKEN" --request POST --data '{"state": "success", "context": "travis-ci/console-issues", "description": "Browser console issues check passed"}' https://api.github.com/repos/dotsub/vtms-subtitle-edit-ui/statuses/${TRAVIS_COMMIT} > /dev/null
+  curl -H "Authorization: token $GITHUB_TOKEN" --request POST --data '{"state": "success", "context": "travis-ci/console-issues", "description": "Browser console issues check passed"}' https://api.github.com/repos/dotsub/manucap/statuses/${TRAVIS_COMMIT} > /dev/null
   echo OK
 fi

@@ -1,5 +1,5 @@
 import { EnhancedStore, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import subtitleEditReducers from "../subtitleEdit/subtitleEditReducers";
+import manuCapReducers from "../manuCap/manuCapReducers";
 
 // NOTE: You can use logger middleware to log Redux state changes/actions to the browser console.
 // This is powerful mechanism to troubleshoot unnecessary state updates + re-renders -> enhance UI performance.
@@ -13,5 +13,5 @@ const middleware = [...getDefaultMiddleware({ serializableCheck: false, immutabl
 // const middleware = [...getDefaultMiddleware({ serializableCheck: false })];
 
 export const createTestingStore = (initialState?: Record<string, unknown> ): EnhancedStore =>
-    configureStore({ reducer: subtitleEditReducers, preloadedState: initialState, middleware, devTools: false });
+    configureStore({ reducer: manuCapReducers, preloadedState: initialState, middleware, devTools: false });
 export default createTestingStore();

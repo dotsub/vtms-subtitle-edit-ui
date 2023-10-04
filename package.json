@@ -1,10 +1,10 @@
 {
-  "name": "@dotsub/vtms-subtitle-edit-ui",
+  "name": "@dotsub/manucap",
   "version": "2.27.0",
   "description": "",
   "author": "Dotsub",
   "license": "",
-  "repository": "dotsub/vtms-subtitle-edit-ui",
+  "repository": "dotsub/manucap",
   "main": "dist/index.js",
   "types": "dist/@types/index.d.ts",
   "engines": {

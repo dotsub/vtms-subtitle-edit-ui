@@ -1,11 +1,11 @@
-import { updateCues } from "./subtitleEdit/cues/cuesList/cuesListActions";
-import { updateEditingTrack } from "./subtitleEdit/trackSlices";
-import { Reducers } from "./subtitleEdit/subtitleEditReducers";
-import SubtitleEdit from "./subtitleEdit/SubtitleEdit";
-import VideoPlayer from "./subtitleEdit/player/VideoPlayer";
-import useMatchedCuesAsCsv from "./subtitleEdit/cues/cuesList/useMatchedCuesAsCsv";
-import { updateSourceCues } from "./subtitleEdit/cues/view/sourceCueSlices";
-import { updateSubtitleUser } from "./subtitleEdit/userSlices";
+import { updateCues } from "./manuCap/cues/cuesList/cuesListActions";
+import { updateEditingTrack } from "./manuCap/trackSlices";
+import { Reducers } from "./manuCap/manuCapReducers";
+import ManuCap from "./manuCap/ManuCap";
+import VideoPlayer from "./manuCap/player/VideoPlayer";
+import useMatchedCuesAsCsv from "./manuCap/cues/cuesList/useMatchedCuesAsCsv";
+import { updateSourceCues } from "./manuCap/cues/view/sourceCueSlices";
+import { updateSubtitleUser } from "./manuCap/userSlices";
 
 const Actions = ({
     updateEditingTrack,
@@ -21,7 +21,7 @@ const Hooks = ({
 export {
     VideoPlayer,
     Reducers,
-    SubtitleEdit,
+    ManuCap,
     Actions,
     Hooks
 };

@@ -23,7 +23,7 @@ describe("indexLibrary", () => {
         // WHEN import of indexLibrary
 
         // THEN
-        expect(indexLibrary.SubtitleEdit).toBeDefined();
+        expect(indexLibrary.ManuCap).toBeDefined();
         expect(indexLibrary.VideoPlayer).toBeDefined();
     });
 });
