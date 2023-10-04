@@ -34,7 +34,7 @@ const testCue = {
 
 const testingUser = {
     displayName: "Test User",
-    email: "test@dotsub.com",
+    email: "test@gmail.com",
     firstname: "Test",
     lastname: "User",
     systemAdmin: "",

@@ -327,11 +327,11 @@ describe("SubtitleSpecificationsForm", () => {
 
         it("enforce link references to open in a new tab", () => {
             // GIVEN
-            const expectedMediaNotes = "<a href=\"https://dotsub.com\" rel=\"noopener noreferrer\"" +
-                " target=\"_blank\">dotsub</a>";
-            subTitleSpecifications.mediaNotes = "This is [dotsub][1], and that means subtitles.\n" +
+            const expectedMediaNotes = "<a href=\"https://google.com\" rel=\"noopener noreferrer\"" +
+                " target=\"_blank\">google</a>";
+            subTitleSpecifications.mediaNotes = "This is [google][1], and that means subtitles.\n" +
                     "\n" +
-                    "[1]: <https://dotsub.com> \"Dotsub\"";
+                    "[1]: <https://google.com> \"Google\"";
 
             // WHEN
             const actualNode = render(
@@ -347,11 +347,11 @@ describe("SubtitleSpecificationsForm", () => {
 
         it("enforce img links to open in a new tab", () => {
             // GIVEN
-            const expectedMediaNotes = "<a href=\"https://dotsub.com/images/bootstrap/logo.png\"" +
+            const expectedMediaNotes = "<a href=\"https://google.com/images/bootstrap/logo.png\"" +
                 " rel=\"noopener noreferrer\" target=\"_blank\">" +
-                "<img src=\"https://dotsub.com/images/bootstrap/logo.png\" alt=\"test\"></a>";
-            subTitleSpecifications.mediaNotes = "[![test](https://dotsub.com/images/bootstrap/logo.png)]" +
-                    "(https://dotsub.com/images/bootstrap/logo.png)";
+                "<img src=\"https://google.com/images/bootstrap/logo.png\" alt=\"test\"></a>";
+            subTitleSpecifications.mediaNotes = "[![test](https://google.com/images/bootstrap/logo.png)]" +
+                    "(https://google.com/images/bootstrap/logo.png)";
 
 
             // WHEN
@@ -408,11 +408,11 @@ describe("SubtitleSpecificationsForm", () => {
 
         it("enforce link references to open in a new tab", () => {
             // GIVEN
-            const expectedMediaNotes = "<a href=\"https://dotsub.com\" rel=\"noopener noreferrer\"" +
-                " target=\"_blank\">dotsub</a>";
-            subTitleSpecifications.comments = "This is [dotsub][1], and that means subtitles.\n" +
+            const expectedMediaNotes = "<a href=\"https://google.com\" rel=\"noopener noreferrer\"" +
+                " target=\"_blank\">google</a>";
+            subTitleSpecifications.comments = "This is [google][1], and that means subtitles.\n" +
                     "\n" +
-                    "[1]: <https://dotsub.com> \"Dotsub\"";
+                    "[1]: <https://google.com> \"Google\"";
 
             // WHEN
             const actualNode = render(
@@ -429,11 +429,11 @@ describe("SubtitleSpecificationsForm", () => {
 
         it("enforce img links to open in a new tab", () => {
             // GIVEN
-            const expectedMediaNotes = "<a href=\"https://dotsub.com/images/bootstrap/logo.png\"" +
+            const expectedMediaNotes = "<a href=\"https://google.com/images/bootstrap/logo.png\"" +
                 " rel=\"noopener noreferrer\" target=\"_blank\">" +
-                "<img src=\"https://dotsub.com/images/bootstrap/logo.png\" alt=\"test\"></a>";
-            subTitleSpecifications.comments = "[![test](https://dotsub.com/images/bootstrap/logo.png)]" +
-                    "(https://dotsub.com/images/bootstrap/logo.png)";
+                "<img src=\"https://google.com/images/bootstrap/logo.png\" alt=\"test\"></a>";
+            subTitleSpecifications.comments = "[![test](https://google.com/images/bootstrap/logo.png)]" +
+                    "(https://google.com/images/bootstrap/logo.png)";
 
 
             // WHEN

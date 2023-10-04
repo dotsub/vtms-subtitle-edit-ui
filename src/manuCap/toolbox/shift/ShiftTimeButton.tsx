@@ -12,7 +12,7 @@ const ShiftTimeButton = (props: Props): ReactElement => {
     return (
         <button
             onClick={props.onClick}
-            className="dotsub-shift-time-button flex items-center"
+            className="mc-shift-time-button flex items-center"
             disabled={!timecodesUnlocked}
             title="Unlock timecodes to enable"
         >

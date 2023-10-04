@@ -28,7 +28,7 @@ export const copyNonConstructorProperties = (newCue: VTTCue, oldCue: VTTCue): vo
     } else if (typeof oldCue.line === "string" && oldCue.line !== "auto") {
         // Due to some type mismatches between VideoJS impl of VTTCue and our API, we have to make a conversion
         // for when a string is return with a numeric value in it. We must convert this to a real number. Otherwise,
-        // all cues won't show up. (https://dotsub.atlassian.net/browse/VTMS-4366)
+        // all cues won't show up.
         newCue.line = Number.parseInt(oldCue.line);
     } else {
         newCue.line = oldCue.line;

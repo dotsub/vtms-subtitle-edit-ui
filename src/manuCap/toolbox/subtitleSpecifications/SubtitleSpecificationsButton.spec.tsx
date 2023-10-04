@@ -35,7 +35,7 @@ describe("SubtitleSpecificationsButton", () => {
             <Provider store={testingStore}>
                 <button
                     id="subtitleSpecsBtn"
-                    className="dotsub-subtitle-specifications-button sbte-btn sbte-btn-light"
+                    className="mc-subtitle-specifications-button sbte-btn sbte-btn-light"
                     data-pr-tooltip="Subtitle Specifications"
                     data-pr-position="top"
                     data-pr-at="center+2 top-2"
@@ -58,7 +58,7 @@ describe("SubtitleSpecificationsButton", () => {
             </Provider>
         );
 
-        actualNode.find("button.dotsub-subtitle-specifications-button").simulate("click");
+        actualNode.find("button.mc-subtitle-specifications-button").simulate("click");
 
         // THEN
         expect(actualNode.html()).toEqual(expectedNode.html());
@@ -70,7 +70,7 @@ describe("SubtitleSpecificationsButton", () => {
             <Provider store={testingStore}>
                 <button
                     id="subtitleSpecsBtn"
-                    className="dotsub-subtitle-specifications-button sbte-btn sbte-btn-light"
+                    className="mc-subtitle-specifications-button sbte-btn sbte-btn-light"
                     data-pr-tooltip="Subtitle Specifications"
                     data-pr-position="top"
                     data-pr-at="center+2 top-2"
@@ -109,7 +109,7 @@ describe("SubtitleSpecificationsButton", () => {
         );
 
         // WHEN
-        actualNode.find("button.dotsub-subtitle-specifications-button")
+        actualNode.find("button.mc-subtitle-specifications-button")
             .simulate("click");
 
         // THEN
@@ -133,7 +133,7 @@ describe("SubtitleSpecificationsButton", () => {
 
         // WHEN
         act(() => {
-            actualNode.find("button.dotsub-subtitle-specifications-button").simulate("click");
+            actualNode.find("button.mc-subtitle-specifications-button").simulate("click");
             actualNode.find(SubtitleSpecificationsModal).props().onClose();
         });
 

@@ -228,7 +228,7 @@ describe("Toolbox", () => {
             actualNode.container.querySelector("#toolboxMenu .p-menuitem:nth-child(3) button") as Element);
         // Clicking on close button
         fireEvent.click(
-            actualNode.container.querySelector(".dotsub-shift-modal-close-button") as Element);
+            actualNode.container.querySelector(".mc-shift-modal-close-button") as Element);
 
         // THEN
         await waitFor(() => {

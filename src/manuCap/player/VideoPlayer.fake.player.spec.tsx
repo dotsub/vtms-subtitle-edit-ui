@@ -982,8 +982,8 @@ describe("VideoPlayer tested with fake player", () => {
         // @ts-ignore - we are mocking the module
         videojs.mockImplementationOnce(() => playerMock);
         const properties = {
-            poster: "http://dotsub-media-encoded.s3.amazonaws.com/media/4/7/thumb.jpg",
-            mp4: "http://dotsub-media-encoded.s3.amazonaws.com/1/14/14.mp4",
+            poster: "http://media-encoded.s3.amazonaws.com/media/4/7/thumb.jpg",
+            mp4: "http://media-encoded.s3.amazonaws.com/1/14/14.mp4",
             tracks: initialTestingTracks,
             languageCuesArray: initialTestingLanguageCuesArray,
             lastCueChange: null

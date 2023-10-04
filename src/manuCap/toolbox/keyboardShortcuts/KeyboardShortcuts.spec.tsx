@@ -12,7 +12,7 @@ describe("KeyboardShortcuts", () => {
     it("renders", () => {
         // GIVEN
         const expectedNode = mount(
-            <button className="dotsub-keyboard-shortcuts-button flex items-center">
+            <button className="mc-keyboard-shortcuts-button flex items-center">
                 <i className="w-7 fa-duotone fa-keyboard text-blue-primary" />
                 <span>Keyboard Shortcuts</span>
             </button>

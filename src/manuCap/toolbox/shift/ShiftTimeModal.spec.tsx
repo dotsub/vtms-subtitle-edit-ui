@@ -90,7 +90,7 @@ describe("ShiftTimesModal", () => {
                             <input
                                 name="shiftTime"
                                 type="number"
-                                className="sbte-form-control dotsub-track-line-shift mt-2"
+                                className="sbte-form-control mc-track-line-shift mt-2"
                                 style={{ width: "120px" }}
                                 placeholder="0.000"
                                 step="0.100"
@@ -131,13 +131,13 @@ describe("ShiftTimesModal", () => {
                 <div className="p-dialog-footer">
                     <button
                         type="submit"
-                        className="dotsub-shift-modal-apply-button sbte-btn sbte-btn-primary"
+                        className="mc-shift-modal-apply-button sbte-btn sbte-btn-primary"
                     >
                         Apply
                     </button>
                     <button
                         type="button"
-                        className="dotsub-shift-modal-close-button sbte-btn sbte-btn-light"
+                        className="mc-shift-modal-close-button sbte-btn sbte-btn-light"
                     >
                         Close
                     </button>
@@ -193,7 +193,7 @@ describe("ShiftTimesModal", () => {
                                 <input
                                     name="shiftTime"
                                     type="number"
-                                    className="sbte-form-control dotsub-track-line-shift mt-2"
+                                    className="sbte-form-control mc-track-line-shift mt-2"
                                     style={{ width: "120px" }}
                                     placeholder="0.000"
                                     step="0.100"
@@ -234,12 +234,12 @@ describe("ShiftTimesModal", () => {
                     <div className="p-dialog-footer">
                         <button
                             type="submit"
-                            className="dotsub-shift-modal-apply-button sbte-btn sbte-btn-primary"
+                            className="mc-shift-modal-apply-button sbte-btn sbte-btn-primary"
                         >Apply
                         </button>
                         <button
                             type="button"
-                            className="dotsub-shift-modal-close-button sbte-btn sbte-btn-light"
+                            className="mc-shift-modal-close-button sbte-btn sbte-btn-light"
                         >Close
                         </button>
                     </div>
@@ -279,7 +279,7 @@ describe("ShiftTimesModal", () => {
         // WHEN
         const input = actualNode.container.querySelectorAll("input[name='shiftTime']")[0];
         const allCuesRadioBtn = actualNode.container.querySelectorAll(".form-check input[value='0']")[0];
-        const submitBtn = actualNode.container.querySelectorAll(".dotsub-shift-modal-apply-button")[0];
+        const submitBtn = actualNode.container.querySelectorAll(".mc-shift-modal-apply-button")[0];
         userEvent.type(input, "1");
         fireEvent.click(allCuesRadioBtn);
         await act(async () => {
@@ -306,7 +306,7 @@ describe("ShiftTimesModal", () => {
         // WHEN
         const input = container.querySelectorAll("input[name='shiftTime']")[0];
         const allCuesRadioBtn = container.querySelectorAll(".form-check input[value='0']")[0];
-        const submitBtn = container.querySelectorAll(".dotsub-shift-modal-apply-button")[0];
+        const submitBtn = container.querySelectorAll(".mc-shift-modal-apply-button")[0];
         fireEvent.change(input, { target: { value: "-0.5" }});
         fireEvent.click(allCuesRadioBtn);
         await act(async () => {
@@ -337,7 +337,7 @@ describe("ShiftTimesModal", () => {
         // WHEN
         const input = container.querySelectorAll("input[name='shiftTime']")[0];
         const allCuesRadioBtn = container.querySelectorAll(".form-check input[value='0']")[0];
-        const submitBtn = container.querySelectorAll(".dotsub-shift-modal-apply-button")[0];
+        const submitBtn = container.querySelectorAll(".mc-shift-modal-apply-button")[0];
         userEvent.type(input, "0.6");
         fireEvent.click(allCuesRadioBtn);
         await act(async () => {
@@ -369,7 +369,7 @@ describe("ShiftTimesModal", () => {
         // WHEN
         const input = container.querySelectorAll("input[name='shiftTime']")[0];
         const allCuesRadioBtn = container.querySelectorAll(".form-check input[value='0']")[0];
-        const submitBtn = container.querySelectorAll(".dotsub-shift-modal-apply-button")[0];
+        const submitBtn = container.querySelectorAll(".mc-shift-modal-apply-button")[0];
         userEvent.type(input, "0.25");
         fireEvent.click(allCuesRadioBtn);
         await act(async () => {
@@ -419,7 +419,7 @@ describe("ShiftTimesModal", () => {
         // WHEN
         const input = container.querySelectorAll("input[name='shiftTime']")[0];
         const allCuesRadioBtn = container.querySelectorAll(".form-check input[value='0']")[0];
-        const submitBtn = container.querySelectorAll(".dotsub-shift-modal-apply-button")[0];
+        const submitBtn = container.querySelectorAll(".mc-shift-modal-apply-button")[0];
         userEvent.type(input, "1");
         fireEvent.click(allCuesRadioBtn);
         await act(async () => {
@@ -444,7 +444,7 @@ describe("ShiftTimesModal", () => {
         // WHEN
         const input = container.querySelectorAll("input[name='shiftTime']")[0];
         const allCuesRadioBtn = container.querySelectorAll(".form-check input[value='0']")[0];
-        const submitBtn = container.querySelectorAll(".dotsub-shift-modal-apply-button")[0];
+        const submitBtn = container.querySelectorAll(".mc-shift-modal-apply-button")[0];
 
         await act(async () => {
             await userEvent.type(input, "-0.153", { delay: 100 });
@@ -474,7 +474,7 @@ describe("ShiftTimesModal", () => {
         // WHEN
         const input = container.querySelectorAll("input[name='shiftTime']")[0];
         const allCuesRadioBtn = container.querySelectorAll(".form-check input[value='0']")[0];
-        const submitBtn = container.querySelectorAll(".dotsub-shift-modal-apply-button")[0];
+        const submitBtn = container.querySelectorAll(".mc-shift-modal-apply-button")[0];
 
         await act(async () => {
             await userEvent.type(input, "-0.153", { delay: 100 });
@@ -507,7 +507,7 @@ describe("ShiftTimesModal", () => {
         // WHEN
         const input = container.querySelectorAll("input[name='shiftTime']")[0];
         const beforeCuesRadioBtn = container.querySelectorAll(".form-check input[value='1']")[0];
-        const submitBtn = container.querySelectorAll(".dotsub-shift-modal-apply-button")[0];
+        const submitBtn = container.querySelectorAll(".mc-shift-modal-apply-button")[0];
 
         await act(async () => {
             await userEvent.type(input, "-0.153", { delay: 100 });
@@ -540,7 +540,7 @@ describe("ShiftTimesModal", () => {
         // WHEN
         const input = container.querySelectorAll("input[name='shiftTime']")[0];
         const afterCuesRadioBtn = container.querySelectorAll(".form-check input[value='2']")[0];
-        const submitBtn = container.querySelectorAll(".dotsub-shift-modal-apply-button")[0];
+        const submitBtn = container.querySelectorAll(".mc-shift-modal-apply-button")[0];
 
         await act(async () => {
             await userEvent.type(input, "-0.153", { delay: 100 });

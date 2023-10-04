@@ -33,7 +33,7 @@ describe("ShiftTimeButton", () => {
         const expectedNode = mount(
             <Provider store={testingStore}>
                 <button
-                    className="dotsub-shift-time-button flex items-center"
+                    className="mc-shift-time-button flex items-center"
                     title="Unlock timecodes to enable"
                 >
                     <i className="w-7 fa-duotone fa-arrow-right-arrow-left text-blue-primary" />
@@ -48,7 +48,7 @@ describe("ShiftTimeButton", () => {
                 <ShiftTimeButton onClick={jest.fn()} />
             </Provider>
         );
-        actualNode.find("button.dotsub-shift-time-button").simulate("click");
+        actualNode.find("button.mc-shift-time-button").simulate("click");
 
         // THEN
         expect(actualNode.html()).toEqual(expectedNode.html());
@@ -59,7 +59,7 @@ describe("ShiftTimeButton", () => {
         const expectedNode = mount(
             <Provider store={testingStore}>
                 <button
-                    className="dotsub-shift-time-button flex items-center"
+                    className="mc-shift-time-button flex items-center"
                     title="Unlock timecodes to enable"
                 >
                     <i className="w-7 fa-duotone fa-arrow-right-arrow-left text-blue-primary" />
@@ -86,7 +86,7 @@ describe("ShiftTimeButton", () => {
         const expectedNode = mount(
             <Provider store={testingStore}>
                 <button
-                    className="dotsub-shift-time-button flex items-center"
+                    className="mc-shift-time-button flex items-center"
                     disabled
                     title="Unlock timecodes to enable"
                 >

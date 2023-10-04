@@ -297,7 +297,7 @@ const TestApp = (): ReactElement => {
                 id: "0fd7af04-6c87-4793-8d66-fdb19b5fd04d",
                 createdBy: {
                     displayName: "John Doe",
-                    email: "john.doe@dotsub.com",
+                    email: "john.doe@gmail.com",
                     firstname: "John",
                     lastname: "Doe",
                     systemAdmin: "",
@@ -312,7 +312,7 @@ const TestApp = (): ReactElement => {
     useEffect(() => {
         const subtitleUser = {
             displayName: "Jane Doe",
-            email: "jane.doe@dotsub.com",
+            email: "jane.doe@gmail.com",
             firstname: "Jane",
             lastname: "Doe",
             systemAdmin: "",
@@ -341,16 +341,14 @@ const TestApp = (): ReactElement => {
                 minCaptionDurationInMillis: MIN_DURATION_SECONDS * 1000,
                 maxCaptionDurationInMillis: 8000,
                 maxCharactersPerSecondPerCaption: 50,
-                comments: "Media comments, please click [here](https://dotsub.com)",
-                mediaNotes: "Media notes, please click [here](https://dotsub.com)"
+                comments: "Media comments, please click [here](https://google.com)",
+                mediaNotes: "Media notes, please click [here](https://google.com)"
             })),
             500
         );
     }, [dispatch]);
 
-    const video = `https://dotsub-media-encoded.s3.amazonaws.com/sample/${LONG_VIDEO_TESTING
-        ? "my-long-movie"
-        : "dotsubExplainer"}`;
+    const video = "https://media-encoded.s3.amazonaws.com/sample/my-long-movie";
 
     return (
         <ManuCap
