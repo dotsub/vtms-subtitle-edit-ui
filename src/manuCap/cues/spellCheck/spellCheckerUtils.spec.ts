@@ -142,16 +142,16 @@ describe("spellCheckerUtils", () => {
 
     });
 
-    describe("vtms language tool language code mapper", () => {
+    describe("manucap language tool language code mapper", () => {
         test.each([
             ["ar-SA", "ar"], ["ca", "ca-ES"], ["nl-NL", "nl"],
             ["en-IE", "en"], ["fr-FR", "fr"], ["fr-CA", "fr"], ["it-IT", "it"], ["no-NO", "no"],
             ["fa-AF", "fa"], ["fa-IR", "fa"], ["es-ES", "es"], ["es-MX", "es"],["sv-SE", "sv"]
         ])(
             "returns equivalent language tool language code for %s",
-            (vtmsLanguageId: string, languageToolValue: string) => {
+            (manucapLanguageId: string, languageToolValue: string) => {
                 //THEN
-                expect(languageToolLanguageMapping.get(vtmsLanguageId)).toEqual(languageToolValue);
+                expect(languageToolLanguageMapping.get(manucapLanguageId)).toEqual(languageToolValue);
             },
         );
 

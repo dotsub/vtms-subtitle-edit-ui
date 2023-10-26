@@ -435,12 +435,12 @@ describe("cueListActions", () => {
                 ["fa-AF", "fa"], ["fa-IR", "fa"], ["es-ES", "es"], ["es-MX", "es"], ["sv-SE", "sv"]
             ])(
                 "calls spellchecker domain with correctly mapped language for %s",
-                (vtmsLanguageId: string, languageToolValue: string) => {
+                (manucapLanguageId: string, languageToolValue: string) => {
                 // GIVEN
                 testingStore.dispatch(updateCues(testingCues) as {} as AnyAction);
                 testingStore.dispatch(setSpellCheckDomain("testing-domain") as {} as AnyAction);
                 testingStore.dispatch(updateEditingTrack(
-                    { language: { id: vtmsLanguageId }, id: trackId } as Track
+                    { language: { id: manucapLanguageId }, id: trackId } as Track
                 ) as {} as AnyAction);
                 testingStore.dispatch(updateEditingCueIndex(2) as {} as AnyAction);
 
@@ -471,12 +471,12 @@ describe("cueListActions", () => {
             ])(
                 "calls spellchecker with manucap languages codes if language is defined but" +
                 " not found in language tool mapper",
-                (vtmsLanguageId: string, languageToolValue: string) => {
+                (manucapLanguageId: string, languageToolValue: string) => {
                     // GIVEN
                     testingStore.dispatch(updateCues(testingCues) as {} as AnyAction);
                     testingStore.dispatch(setSpellCheckDomain("testing-domain") as {} as AnyAction);
                     testingStore.dispatch(updateEditingTrack(
-                        { language: { id: vtmsLanguageId }, id: trackId } as Track
+                        { language: { id: manucapLanguageId }, id: trackId } as Track
                     ) as {} as AnyAction);
                     testingStore.dispatch(updateEditingCueIndex(2) as {} as AnyAction);
 

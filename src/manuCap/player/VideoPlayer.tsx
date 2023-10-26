@@ -78,9 +78,9 @@ const updateCueAndCopyStyles = (videoJsTrack: TextTrack) => (vttCue: VTTCue, ind
 
 const updateCuesForVideoJsTrack = (props: Props, videoJsTrack: TextTrack, trackFontSizePercent?: number): void => {
     const matchTracks = (track: Track): boolean => track.language.id === videoJsTrack.language;
-    const vtmsTrack = props.tracks.filter(matchTracks)[0] as Track;
+    const manucapTrack = props.tracks.filter(matchTracks)[0] as Track;
     props.languageCuesArray
-        .filter((languageCues: LanguageCues) => languageCues.languageId === vtmsTrack.language.id)
+        .filter((languageCues: LanguageCues) => languageCues.languageId === manucapTrack.language.id)
         .forEach((languageCues: LanguageCues) => {
             languageCues.cues.map((cue: CueDto): VTTCue => cue.vttCue)
                 .forEach((cue, index) =>
