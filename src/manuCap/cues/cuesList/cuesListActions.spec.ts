@@ -469,7 +469,7 @@ describe("cueListActions", () => {
                 ["en-US", "en-US"], ["en-GB", "en-GB"], ["pt-BR", "pt-BR"],
                 ["pt-PT", "pt-PT"], ["sk-SK", "sk-SK"], ["ru-RU", "ru-RU"]
             ])(
-                "calls spellchecker with VTMS languages codes if language is defined but" +
+                "calls spellchecker with manucap languages codes if language is defined but" +
                 " not found in language tool mapper",
                 (vtmsLanguageId: string, languageToolValue: string) => {
                     // GIVEN
